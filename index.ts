@@ -1,7 +1,9 @@
 import type { AdapterOptions } from "./types.js";
 import type { CompletionAdapter } from "adminforth";
+import { GoogleGenAI } from "@google/genai";
 
-export default class CompletionAdapterOpenAIChatGPT
+
+export default class CompletionAdapterGoogleGemini
   implements CompletionAdapter
 {
   options: AdapterOptions;
@@ -9,7 +11,7 @@ export default class CompletionAdapterOpenAIChatGPT
   constructor(options: AdapterOptions) {
     this.options = options;
   }
-
+  
   validate() {
     if (!this.options.geminiApiKey) {
       throw new Error("geminiApiKey is required");
@@ -21,32 +23,26 @@ export default class CompletionAdapterOpenAIChatGPT
     finishReason?: string;
     error?: string;
   }> => {
-    const resp = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${this.options.geminiApiKey}`,
-      },
-      body: JSON.stringify({
-        model: this.options.model || "gpt-4o-mini",
-        messages: [
-          {
-            role: "user",
-            content, //param
-          },
-        ],
-        temperature: this.options.expert?.temperature || 0.7,
-        max_tokens: maxTokens,
-        stop, //param
-      }),
+
+    const ai = new GoogleGenAI({
+      apiKey: this.options.geminiApiKey,
     });
-    const data = await resp.json();
-    if (data.error) {
-      return { error: data.error.message };
+
+    try {
+      const response = await ai.models.generateContent({
+        model: this.options.model || "gemini-3-flash-preview",
+        contents: content,
+        config: {
+          temperature: this.options.expert?.temperature ?? 0.7,
+          maxOutputTokens: maxTokens,
+          stopSequences: stop,
+        },
+      });
+      return {
+        content: response.text,
+      };
+    } catch (error) {
+      return { error: (error as Error).message };
     }
-    return {
-      content: data.choices[0].message.content,
-      finishReason: data.choices[0].finish_reason,
-    };
   };
 }
