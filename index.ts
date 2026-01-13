@@ -11,8 +11,8 @@ export default class CompletionAdapterOpenAIChatGPT
   }
 
   validate() {
-    if (!this.options.openAiApiKey) {
-      throw new Error("openAiApiKey is required");
+    if (!this.options.geminiApiKey) {
+      throw new Error("geminiApiKey is required");
     }
   }
 
@@ -25,7 +25,7 @@ export default class CompletionAdapterOpenAIChatGPT
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${this.options.openAiApiKey}`,
+        Authorization: `Bearer ${this.options.geminiApiKey}`,
       },
       body: JSON.stringify({
         model: this.options.model || "gpt-4o-mini",

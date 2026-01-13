@@ -2,4 +2,4 @@
 
 ### Added
 
-- Added OpenAI chatgpt completion adapter.
+- Added Google Gemini completion adapter.

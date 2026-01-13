@@ -1,6 +1,6 @@
 {
-  "name": "@adminforth/completion-adapter-open-ai-chat-gpt",
-  "version": "1.0.2",
+  "name": "@adminforth/completion-adapter-google-gemini",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
@@ -12,5 +12,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@google/genai": "^1.35.0"
+  }
 }
