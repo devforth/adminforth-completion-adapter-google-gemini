@@ -36,6 +36,7 @@ export default class CompletionAdapterGoogleGemini
           temperature: this.options.expert?.temperature ?? 0.7,
           maxOutputTokens: maxTokens,
           stopSequences: stop,
+          ...this.options.extraRequestBodyParameters,
         },
       });
       return {

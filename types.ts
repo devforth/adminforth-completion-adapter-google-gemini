@@ -11,6 +11,12 @@ export interface AdapterOptions {
    */
   model?: string;
 
+
+  /**
+   * Additional request body parameters to include in the API request.
+   */
+  extraRequestBodyParameters?: Record<string, unknown>;
+
   /**
    * Expert settings
    */
