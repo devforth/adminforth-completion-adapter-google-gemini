@@ -1,7 +1,8 @@
 import type { AdapterOptions } from "./types.js";
 import type { CompletionAdapter } from "adminforth";
 import { GoogleGenAI } from "@google/genai";
-
+import pRetry from 'p-retry';
+import { logger } from "adminforth";
 
 export default class CompletionAdapterGoogleGemini
   implements CompletionAdapter
@@ -28,22 +29,34 @@ export default class CompletionAdapterGoogleGemini
       apiKey: this.options.geminiApiKey,
     });
 
-    try {
-      const response = await ai.models.generateContent({
-        model: this.options.model || "gemini-3-flash-preview",
-        contents: content,
-        config: {
-          temperature: this.options.expert?.temperature ?? 0.7,
-          maxOutputTokens: maxTokens,
-          stopSequences: stop,
-          ...this.options.extraRequestBodyParameters,
-        },
-      });
-      return {
-        content: response.text,
-      };
-    } catch (error) {
-      return { error: (error as Error).message };
+    const tryToGenerate = async () => {
+      logger.debug("Making Google Gemini API call");
+      try {
+        const response = await ai.models.generateContent({
+          model: this.options.model || "gemini-3-flash-preview",
+          contents: content,
+          config: {
+            temperature: this.options.expert?.temperature ?? 0.7,
+            maxOutputTokens: maxTokens,
+            stopSequences: stop,
+            ...this.options.extraRequestBodyParameters,
+          },
+        });
+        logger.debug(`Google Gemini SUCCESSFUL API response: ${response}`);
+        return {
+          content: response.text,
+        };
+      } catch (error) {
+        logger.error(`Error during Google Gemini API call: ${error}`);
+        throw new Error(`Error during Google Gemini API call: ${error}`);
+      }
     }
+    const result = await pRetry(tryToGenerate, {
+      retries: 5,
+      onFailedAttempt: ({error, attemptNumber, retriesLeft, retriesConsumed}) => {
+        logger.debug(`Attempt ${attemptNumber} failed. ${retriesLeft} retries left. ${retriesConsumed} retries consumed.`);
+      },
+    })
+    return result;
   };
 }

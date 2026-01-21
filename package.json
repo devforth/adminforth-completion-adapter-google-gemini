@@ -15,6 +15,9 @@
   "description": "",
   "dependencies": {
     "@google/genai": "^1.35.0",
+    "p-retry": "^7.1.1"
+  },
+  "peerDependencies": {
     "adminforth": "next"
   },
   "devDependencies": {
