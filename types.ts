@@ -16,14 +16,4 @@ export interface AdapterOptions {
    * Additional request body parameters to include in the API request.
    */
   extraRequestBodyParameters?: Record<string, unknown>;
-
-  /**
-   * Expert settings
-   */
-  expert?: {
-    /**
-     * Temperature (0-1). Lower is more deterministic, higher is more unpredicted creative. Default is 0.7.
-     */
-    temperature?: number;
-  };
 }

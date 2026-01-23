@@ -36,9 +36,7 @@ export default class CompletionAdapterGoogleGemini
           model: this.options.model || "gemini-3-flash-preview",
           contents: content,
           config: {
-            temperature: this.options.expert?.temperature ?? 0.7,
             maxOutputTokens: maxTokens,
-            stopSequences: stop,
             ...this.options.extraRequestBodyParameters,
           },
         });
