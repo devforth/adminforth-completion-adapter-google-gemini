@@ -46,7 +46,7 @@ export default class CompletionAdapterGoogleGemini
         };
       } catch (error) {
         logger.error(`Error during Google Gemini API call: ${error}`);
-        throw new Error(`Error during Google Gemini API call: ${error}`);
+        throw new Error(`Error during Google Gemini API call: ${JSON.parse(error.message).error.message}`);
       }
     }
     const result = await pRetry(tryToGenerate, {
