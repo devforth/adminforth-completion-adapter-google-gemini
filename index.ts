@@ -19,7 +19,7 @@ export default class CompletionAdapterGoogleGemini
     }
   }
 
-  complete = async (content: string, stop = ["."], maxTokens = 50): Promise<{
+  complete = async (content: string, stop = ["."], maxTokens = 50, outputSchema?: any): Promise<{
     content?: string;
     finishReason?: string;
     error?: string;
@@ -36,6 +36,7 @@ export default class CompletionAdapterGoogleGemini
           model: this.options.model || "gemini-3-flash-preview",
           contents: content,
           config: {
+            responseJsonSchema: outputSchema ? outputSchema : undefined,
             maxOutputTokens: maxTokens,
             ...this.options.extraRequestBodyParameters,
           },
