@@ -19,6 +19,20 @@ export default class CompletionAdapterGoogleGemini
     }
   }
 
+  async measureTokensCount(content: string): Promise<number> {
+    // Implement token counting logic here
+    const ai = new GoogleGenAI({
+      apiKey: this.options.geminiApiKey,
+    });
+    const countTokensResponse = await ai.models.countTokens({
+      model: "gemini-2.0-flash",
+      contents: content,
+    });
+
+    return countTokensResponse.totalTokens;
+  }
+
+
   complete = async (content: string, stop = ["."], maxTokens = 50, outputSchema?: any): Promise<{
     content?: string;
     finishReason?: string;
