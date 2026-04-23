@@ -4,6 +4,12 @@ import { GoogleGenAI } from "@google/genai";
 import pRetry from 'p-retry';
 import { logger } from "adminforth";
 
+type CompletionRequestInput = {
+  content: string;
+  maxTokens?: number;
+  outputSchema?: any;
+};
+
 export default class CompletionAdapterGoogleGemini
   implements CompletionAdapter
 {
@@ -33,11 +39,28 @@ export default class CompletionAdapterGoogleGemini
   }
 
 
-  complete = async (content: string, stop = ["."], maxTokens = 50, outputSchema?: any): Promise<{
+  complete = async (
+    requestOrContent: CompletionRequestInput | string,
+    maxTokens = 50,
+    outputSchema?: any,
+  ): Promise<{
     content?: string;
     finishReason?: string;
     error?: string;
   }> => {
+    const request =
+      typeof requestOrContent === "string"
+        ? {
+            content: requestOrContent,
+            maxTokens,
+            outputSchema,
+          }
+        : requestOrContent;
+    const {
+      content,
+      maxTokens: requestMaxTokens = 50,
+      outputSchema: requestOutputSchema,
+    } = request;
 
     const ai = new GoogleGenAI({
       apiKey: this.options.geminiApiKey,
@@ -50,8 +73,8 @@ export default class CompletionAdapterGoogleGemini
           model: this.options.model || "gemini-3-flash-preview",
           contents: content,
           config: {
-            responseJsonSchema: outputSchema ? outputSchema : undefined,
-            maxOutputTokens: maxTokens,
+            responseJsonSchema: requestOutputSchema ? requestOutputSchema : undefined,
+            maxOutputTokens: requestMaxTokens,
             ...this.options.extraRequestBodyParameters,
           },
         });
