@@ -41,7 +41,8 @@ export default class CompletionAdapterGoogleGemini
 
   complete = async (
     requestOrContent: CompletionRequestInput | string,
-    maxTokens = 50,
+    stopOrMaxTokens: string[] | number = 50,
+    maxTokensOrOutputSchema: number | any = 50,
     outputSchema?: any,
   ): Promise<{
     content?: string;
@@ -52,8 +53,16 @@ export default class CompletionAdapterGoogleGemini
       typeof requestOrContent === "string"
         ? {
             content: requestOrContent,
-            maxTokens,
-            outputSchema,
+            maxTokens:
+              typeof stopOrMaxTokens === "number"
+                ? stopOrMaxTokens
+                : typeof maxTokensOrOutputSchema === "number"
+                  ? maxTokensOrOutputSchema
+                  : 50,
+            outputSchema:
+              typeof stopOrMaxTokens === "number"
+                ? maxTokensOrOutputSchema
+                : outputSchema,
           }
         : requestOrContent;
     const {
