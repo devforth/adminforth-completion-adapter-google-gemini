@@ -1,5 +1,6 @@
 import type { AdapterOptions } from "./types.js";
 import type { CompletionAdapter } from "adminforth";
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { GoogleGenAI } from "@google/genai";
 import pRetry from 'p-retry';
 import { logger } from "adminforth";
@@ -9,6 +10,42 @@ type CompletionRequestInput = {
   maxTokens?: number;
   outputSchema?: any;
 };
+
+type AgentModelPurpose = "primary" | "summary";
+
+const GOOGLE_LANGCHAIN_AGENT_OPTION_KEYS = [
+  "temperature",
+  "topP",
+  "topK",
+  "stopSequences",
+  "safetySettings",
+  "apiVersion",
+  "baseUrl",
+  "customHeaders",
+  "streaming",
+  "json",
+  "streamUsage",
+  "convertSystemMessageToHumanContent",
+  "thinkingConfig",
+] as const;
+
+function getGoogleLangChainAgentOptions(
+  extraRequestBodyParameters?: Record<string, unknown>,
+) {
+  const options: Record<string, unknown> = {};
+
+  if (!extraRequestBodyParameters) {
+    return options;
+  }
+
+  for (const key of GOOGLE_LANGCHAIN_AGENT_OPTION_KEYS) {
+    if (key in extraRequestBodyParameters) {
+      options[key] = extraRequestBodyParameters[key];
+    }
+  }
+
+  return options;
+}
 
 export default class CompletionAdapterGoogleGemini
   implements CompletionAdapter
@@ -36,6 +73,24 @@ export default class CompletionAdapterGoogleGemini
     });
 
     return countTokensResponse.totalTokens;
+  }
+
+  getLangChainAgentSpec(params: {
+    maxTokens: number;
+    purpose: AgentModelPurpose;
+  }) {
+    const modelOptions = getGoogleLangChainAgentOptions(
+      this.options.extraRequestBodyParameters,
+    );
+
+    return {
+      model: new ChatGoogleGenerativeAI({
+        model: this.options.model || "gemini-3-flash-preview",
+        apiKey: this.options.geminiApiKey,
+        maxOutputTokens: params.maxTokens,
+        ...modelOptions,
+      } as any),
+    };
   }
 
 
