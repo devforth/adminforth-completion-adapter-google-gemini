@@ -61,7 +61,7 @@ export default class CompletionAdapterGoogleGemini
       throw new Error("geminiApiKey is required");
     }
   }
-
+ 
   async measureTokensCount(content: string): Promise<number> {
     // Implement token counting logic here
     const ai = new GoogleGenAI({
