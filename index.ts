@@ -69,7 +69,7 @@ export default class CompletionAdapterGoogleGemini
     });
     const countTokensResponse = await ai.models.countTokens({
       model: "gemini-2.0-flash",
-      contents: content, 
+      contents: content,
     });
 
     return countTokensResponse.totalTokens;
