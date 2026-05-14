@@ -4,9 +4,11 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "build": "tsc && npm version patch",
-    "rollout": "npm run build && npm publish --access public"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "DevForth (https://devforth.io)",
@@ -20,7 +22,34 @@
   "peerDependencies": {
     "adminforth": "^2.24.0"
   },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/github",
+      [
+        "semantic-release-slack-bot",
+        {
+          "packageName": "@adminforth/completion-adapter-google-gemini",
+          "notifyOnSuccess": true,
+          "notifyOnFail": true,
+          "slackIcon": ":package:",
+          "markdownReleaseNotes": true
+        }
+      ]
+    ],
+    "branches": [
+      "main",
+      {
+        "name": "next",
+        "prerelease": true
+      }
+    ]
+  },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "semantic-release": "^24.2.1",
+    "semantic-release-slack-bot": "^4.0.2"
   }
 }
