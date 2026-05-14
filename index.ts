@@ -82,7 +82,7 @@ export default class CompletionAdapterGoogleGemini
     const modelOptions = getGoogleLangChainAgentOptions(
       this.options.extraRequestBodyParameters,
     );
-
+ 
     return {
       model: new ChatGoogleGenerativeAI({
         model: this.options.model || "gemini-3-flash-preview",
