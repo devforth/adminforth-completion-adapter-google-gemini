@@ -12,8 +12,8 @@ importers:
         specifier: ^1.35.0
         version: 1.44.0
       '@langchain/google-genai':
-        specifier: 2.1.27
-        version: 2.1.27(@langchain/core@1.1.41(ws@8.19.0))
+        specifier: 2.1.28
+        version: 2.1.28(@langchain/core@1.1.41(ws@8.19.0))
       adminforth:
         specifier: ^2.24.0
         version: 2.24.0(@types/node@25.3.3)
@@ -230,11 +230,11 @@ packages:
     resolution: {integrity: sha512-KdoNEf1YVJ9jnOP+smq4O6teu63tE7GDUryOnZ2lVfooHLrHK/ECUadjOcDSCK/yk/xBw/8nexJ3ZNBMtKnstw==}
     engines: {node: '>=20'}
 
-  '@langchain/google-genai@2.1.27':
-    resolution: {integrity: sha512-KCmSrOopY8dF7RweK6NpXU0qSJrrmTkv6aD4b2UJZ45jzyNwEW/tp8jQV6Ljc9e3C402fuNtjpiAjTi7KL0fZQ==}
+  '@langchain/google-genai@2.1.28':
+    resolution: {integrity: sha512-iTzNYWST8hTRqOXZdme18tq5GnCUwtrrJECE51ZCjg6Vg0mPsV44amdC+/bc+UK0+uphKWESGWs277aAyM2MlA==}
     engines: {node: '>=20'}
     peerDependencies:
-      '@langchain/core': ^1.1.40
+      '@langchain/core': ^1.1.41
 
   '@mongodb-js/saslprep@1.4.6':
     resolution: {integrity: sha512-y+x3H1xBZd38n10NZF/rEBlvDOOMQ6LKUTHqr8R9VkJ+mmQOYtJFxIlkkK8fZrtOiL6VixbOBWMbZGBdal3Z1g==}
@@ -2795,7 +2795,7 @@ snapshots:
       - openai
       - ws
 
-  '@langchain/google-genai@2.1.27(@langchain/core@1.1.41(ws@8.19.0))':
+  '@langchain/google-genai@2.1.28(@langchain/core@1.1.41(ws@8.19.0))':
     dependencies:
       '@google/generative-ai': 0.24.1
       '@langchain/core': 1.1.41(ws@8.19.0)

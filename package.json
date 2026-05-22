@@ -16,7 +16,7 @@
   "description": "",
   "dependencies": {
     "@google/genai": "^1.35.0",
-    "@langchain/google-genai": "2.1.27",
+    "@langchain/google-genai": "2.1.28",
     "p-retry": "^7.1.1"
   },
   "peerDependencies": {

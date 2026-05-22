@@ -61,7 +61,7 @@ export default class CompletionAdapterGoogleGemini
       throw new Error("geminiApiKey is required");
     }
   }
- 
+
   async measureTokensCount(content: string): Promise<number> {
     // Implement token counting logic here
     const ai = new GoogleGenAI({
@@ -82,7 +82,7 @@ export default class CompletionAdapterGoogleGemini
     const modelOptions = getGoogleLangChainAgentOptions(
       this.options.extraRequestBodyParameters,
     );
- 
+
     return {
       model: new ChatGoogleGenerativeAI({
         model: this.options.model || "gemini-3-flash-preview",
@@ -135,7 +135,12 @@ export default class CompletionAdapterGoogleGemini
       try {
         const response = await ai.models.generateContent({
           model: this.options.model || "gemini-3-flash-preview",
-          contents: content,
+          contents: [
+            {
+              role: "user",
+              parts: [{ text: content }],
+            },
+          ],
           config: {
             responseJsonSchema: requestOutputSchema ? requestOutputSchema : undefined,
             maxOutputTokens: requestMaxTokens,
@@ -148,7 +153,13 @@ export default class CompletionAdapterGoogleGemini
         };
       } catch (error) {
         logger.error(`Error during Google Gemini API call: ${error}`);
-        throw new Error(`Error during Google Gemini API call: ${JSON.parse(error.message).error.message}`);
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        let googleErrorMessage = errorMessage;
+        try {
+          googleErrorMessage = JSON.parse(errorMessage).error.message;
+        } catch {
+        }
+        throw new Error(`Error during Google Gemini API call: ${googleErrorMessage}`);
       }
     }
     const result = await pRetry(tryToGenerate, {
