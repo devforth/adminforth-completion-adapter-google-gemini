@@ -13,6 +13,23 @@ type CompletionRequestInput = {
 
 type AgentModelPurpose = "primary" | "summary";
 
+type GeminiUsageMetadata = {
+  promptTokenCount?: number;
+  cachedContentTokenCount?: number;
+  candidatesTokenCount?: number;
+  thoughtsTokenCount?: number;
+  prompt_token_count?: number;
+  cached_content_token_count?: number;
+  candidates_token_count?: number;
+  thoughts_token_count?: number;
+};
+
+type UsedTokens = {
+  input_uncached: number;
+  input_cached: number;
+  output: number;
+};
+
 const GOOGLE_LANGCHAIN_AGENT_OPTION_KEYS = [
   "temperature",
   "topP",
@@ -45,6 +62,30 @@ function getGoogleLangChainAgentOptions(
   }
 
   return options;
+}
+
+function extractUsedTokens(usageMetadata?: GeminiUsageMetadata): UsedTokens | undefined {
+  if (!usageMetadata) return undefined;
+
+  const input = usageMetadata.promptTokenCount ?? usageMetadata.prompt_token_count ?? 0;
+  const inputCached =
+    usageMetadata.cachedContentTokenCount ??
+    usageMetadata.cached_content_token_count ??
+    0;
+  const output =
+    usageMetadata.candidatesTokenCount ??
+    usageMetadata.candidates_token_count ??
+    0;
+  const thoughts =
+    usageMetadata.thoughtsTokenCount ??
+    usageMetadata.thoughts_token_count ??
+    0;
+
+  return {
+    input_uncached: Math.max(input - inputCached, 0),
+    input_cached: inputCached,
+    output: output + thoughts,
+  };
 }
 
 export default class CompletionAdapterGoogleGemini
@@ -103,6 +144,7 @@ export default class CompletionAdapterGoogleGemini
     content?: string;
     finishReason?: string;
     error?: string;
+    used_tokens?: UsedTokens;
   }> => {
     const request =
       typeof requestOrContent === "string"
@@ -150,6 +192,7 @@ export default class CompletionAdapterGoogleGemini
         logger.debug(`Google Gemini SUCCESSFUL API response: ${response}`);
         return {
           content: response.text,
+          used_tokens: extractUsedTokens(response.usageMetadata),
         };
       } catch (error) {
         logger.error(`Error during Google Gemini API call: ${error}`);
