@@ -20,7 +20,7 @@
     "p-retry": "^7.1.1"
   },
   "peerDependencies": {
-    "adminforth": "^2.24.0"
+    "adminforth": "^3.0.1"
   },
   "release": {
     "plugins": [
@@ -48,8 +48,9 @@
     ]
   },
   "devDependencies": {
-    "typescript": "^5.9.3",
+    "adminforth": "^3.0.1",
     "semantic-release": "^24.2.1",
-    "semantic-release-slack-bot": "^4.0.2"
+    "semantic-release-slack-bot": "^4.0.2",
+    "typescript": "^5.9.3"
   }
 }
