@@ -13,7 +13,7 @@
   "keywords": [],
   "author": "DevForth (https://devforth.io)",
   "license": "MIT",
-  "description": "",
+  "description": "AdminForth completion adapter for Google Gemini models.",
   "dependencies": {
     "@google/genai": "^1.35.0",
     "@langchain/google-genai": "2.1.28",
@@ -52,5 +52,9 @@
     "semantic-release": "^24.2.1",
     "semantic-release-slack-bot": "^4.0.2",
     "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devforth/adminforth-completion-adapter-google-gemini.git"
   }
 }
