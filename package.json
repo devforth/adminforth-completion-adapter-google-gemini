@@ -53,6 +53,7 @@
     "semantic-release-slack-bot": "^4.0.2",
     "typescript": "^5.9.3"
   },
+  "homepage": "https://adminforth.dev/docs/tutorial/Adapters/ai-completion-adapters/#google-gemini-completion-adapter",
   "repository": {
     "type": "git",
     "url": "https://github.com/devforth/adminforth-completion-adapter-google-gemini.git"
