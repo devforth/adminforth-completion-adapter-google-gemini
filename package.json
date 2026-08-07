@@ -15,8 +15,9 @@
   "license": "MIT",
   "description": "AdminForth completion adapter for Google Gemini models.",
   "dependencies": {
-    "@google/genai": "^1.35.0",
-    "@langchain/google-genai": "2.1.28",
+    "@google/genai": "^2.15.0",
+    "@langchain/core": "^1.2.4",
+    "@langchain/google-genai": "2.2.0",
     "p-retry": "^7.1.1"
   },
   "peerDependencies": {
