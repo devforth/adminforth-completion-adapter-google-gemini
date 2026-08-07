@@ -11,16 +11,16 @@ importers:
       '@google/genai':
         specifier: ^2.15.0
         version: 2.15.0
-      '@langchain/core':
-        specifier: ^1.2.4
-        version: 1.2.4(ws@8.19.0)
       '@langchain/google-genai':
         specifier: 2.2.0
-        version: 2.2.0(@langchain/core@1.2.4(ws@8.19.0))
+        version: 2.2.0(@langchain/core@1.2.5(ws@8.19.0))
       p-retry:
         specifier: ^7.1.1
         version: 7.1.1
     devDependencies:
+      '@langchain/core':
+        specifier: 1.2.5
+        version: 1.2.5(ws@8.19.0)
       adminforth:
         specifier: ^3.0.1
         version: 3.0.1(@types/node@25.3.3)
@@ -222,8 +222,8 @@ packages:
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
     engines: {node: '>=12'}
 
-  '@langchain/core@1.2.4':
-    resolution: {integrity: sha512-GIrJktdsFPx8gM0C3VyikkeYGZAV7iRIzUJuS5tFatiKLExybou0LI0MuxH9kksN38quyfWdQDl20lIEAEVkVA==}
+  '@langchain/core@1.2.5':
+    resolution: {integrity: sha512-4lXj3fTPQYGdEtOG9gWDnvmp6wpXNMo9MmWzfZxxPUxMcjulZJa93pYAZ90luFLg2YVdVuUl2tuwdD7tY5K9MA==}
     engines: {node: '>=20'}
 
   '@langchain/google-genai@2.2.0':
@@ -2692,7 +2692,7 @@ snapshots:
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: wrap-ansi@7.0.0
 
-  '@langchain/core@1.2.4(ws@8.19.0)':
+  '@langchain/core@1.2.5(ws@8.19.0)':
     dependencies:
       '@cfworker/json-schema': 4.1.1
       '@standard-schema/spec': 1.1.0
@@ -2708,10 +2708,10 @@ snapshots:
       - openai
       - ws
 
-  '@langchain/google-genai@2.2.0(@langchain/core@1.2.4(ws@8.19.0))':
+  '@langchain/google-genai@2.2.0(@langchain/core@1.2.5(ws@8.19.0))':
     dependencies:
       '@google/generative-ai': 0.24.1
-      '@langchain/core': 1.2.4(ws@8.19.0)
+      '@langchain/core': 1.2.5(ws@8.19.0)
 
   '@octokit/auth-token@6.0.0': {}
 

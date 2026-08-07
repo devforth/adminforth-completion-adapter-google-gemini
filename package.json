@@ -16,11 +16,11 @@
   "description": "AdminForth completion adapter for Google Gemini models.",
   "dependencies": {
     "@google/genai": "^2.15.0",
-    "@langchain/core": "^1.2.4",
     "@langchain/google-genai": "2.2.0",
     "p-retry": "^7.1.1"
   },
   "peerDependencies": {
+    "@langchain/core": "^1.2.5",
     "adminforth": "^3.0.1"
   },
   "release": {
@@ -49,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@langchain/core": "1.2.5",
     "adminforth": "^3.0.1",
     "semantic-release": "^24.2.1",
     "semantic-release-slack-bot": "^4.0.2",
