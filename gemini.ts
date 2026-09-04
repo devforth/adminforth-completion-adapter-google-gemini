@@ -81,7 +81,7 @@ export class GeminiService {
       apiKey: this.options.geminiApiKey,
     });
     const countTokensResponse = await ai.models.countTokens({
-      model: "gemini-2.0-flash",
+      model: "gemini-3.6-flash",
       contents: content,
     });
 
