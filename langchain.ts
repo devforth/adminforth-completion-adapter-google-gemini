@@ -1,5 +1,5 @@
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-import type { AdapterOptions } from "./types.js";
+import { DEFAULT_MODEL, type AdapterOptions } from "./types.js";
 
 export type AgentModelPurpose = "primary" | "summary";
 
@@ -114,7 +114,7 @@ export function createLangChainAgentSpec(params: {
   );
 
   const model = new ChatGoogleGenerativeAI({
-      model: params.options.model || "gemini-3-flash-preview",
+      model: params.options.model || DEFAULT_MODEL,
       apiKey: params.options.geminiApiKey,
       maxOutputTokens: params.maxTokens,
       ...modelOptions,

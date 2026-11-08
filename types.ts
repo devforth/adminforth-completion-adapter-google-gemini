@@ -1,3 +1,6 @@
+/** Model used when `model` is not set. */
+export const DEFAULT_MODEL = "gemini-3.8-flash";
+
 export interface AdapterOptions {
   /**
    * Google API key. Go to https://aistudio.google.com/api-keys, go to Dashboard -> API keys -> Create new secret key
@@ -7,7 +10,7 @@ export interface AdapterOptions {
 
   /**
    * Model name. Go to https://ai.google.dev/gemini-api/docs/models, select model and copy name.
-   * Default is `gemini-3-flash-preview`. Use e.g. more expensive `gemini-3-pro-preview` for more powerful model.
+   * Default is `gemini-3.8-flash`. Use e.g. more expensive `gemini-4-argon` for more powerful model.
    */
   model?: string;
 

@@ -1,7 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 import { logger } from "adminforth";
 import pRetry from "p-retry";
-import type { AdapterOptions } from "./types.js";
+import { DEFAULT_MODEL, type AdapterOptions } from "./types.js";
 
 export type CompletionRequestInput = {
   content: string;
@@ -81,7 +81,7 @@ export class GeminiService {
       apiKey: this.options.geminiApiKey,
     });
     const countTokensResponse = await ai.models.countTokens({
-      model: "gemini-3.6-flash",
+      model: DEFAULT_MODEL,
       contents: content,
     });
 
@@ -103,7 +103,7 @@ export class GeminiService {
       logger.debug("Making Google Gemini API call");
       try {
         const response = await ai.models.generateContent({
-          model: this.options.model || "gemini-3-flash-preview",
+          model: this.options.model || DEFAULT_MODEL,
           contents: [
             {
               role: "user",
